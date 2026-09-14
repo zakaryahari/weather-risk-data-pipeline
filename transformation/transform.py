@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import json
 import os
 import glob
@@ -29,5 +30,28 @@ for path in file_paths:
 
     df = pd.concat([df , tab] , ignore_index=True)
 
-
 df.to_csv("data/silver/All_Moroccain_Citys.csv" , index=False)
+
+
+# print(df.head())
+
+wind_conditions = [
+    (df['wind_speed_10m_max'] < 20),
+    (df['wind_speed_10m_max'] >= 20) & (df['wind_speed_10m_max'] <= 40),
+    (df['wind_speed_10m_max'] > 40)
+]
+wind_cat_choices = ["Calm", "Moderate", "High"]
+wind_point_choices = [0, 15, 40]
+
+
+
+df['wind_category'] = np.select(wind_conditions, wind_cat_choices, default="Unknown")
+
+
+
+df['wind_points'] = np.select(wind_conditions, wind_point_choices, default=0)
+
+
+
+
+
