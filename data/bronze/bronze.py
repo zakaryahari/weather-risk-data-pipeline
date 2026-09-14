@@ -17,7 +17,8 @@ for index , row in df.iterrows() :
 
             responde = responde.json()
 
-
+            with open("data/bronze/citys/casa.json", "w") as file:
+                json.dump(responde, file, indent=4)
         else : 
             print("Request failed:", responde.status_code)
 
