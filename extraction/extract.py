@@ -10,28 +10,37 @@ df = pd.read_csv(url)
 
 df.to_csv("data/maroc_cities.csv" , index=False)
 
+latitude_list = []
+longitude_list = []
+counter = 0
+
 
 for index , row in df.iterrows() :
-    print(row['city'],row['lat'],row['lng'])
 
-    url = "https://api.open-meteo.com/v1/forecast?latitude="+ str(row['lat']) +"&longitude=" + str(row['lng']) + "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,weather_code&timezone=auto"
+    latitude_list.append(row['lat'])
+    longitude_list.append(row['lng'])
+    counter += 1
 
-    try : 
+    if len(latitude_list) == 100:
         
-        responde = requests.get(url)
 
-        if responde.status_code == 200 :
-
-            responde = responde.json()
-
-            file_name = "data/bronze/citys/" + str(row["city"]) + ".json"
-
+        lat_str = ",".join(latitude_list)
+        lng_str = ",".join(longitude_list)
+        
+        api_url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat_str + "&longitude=" + lng_str + "&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max,wind_speed_10m_max,wind_gusts_10m_max,weather_code&timezone=auto"
+        
+        print(f"Sending batch {counter}...")
+        response = requests.get(api_url)
+        
+        if response.status_code == 200:
+            file_name = f"data/bronze/citys/batch_{counter}_Bronze.json"
             with open(file_name, "w") as file:
-                json.dump(responde, file, indent=4)
-        else : 
-            print("Request failed:", responde.status_code)
+                json.dump(response.json(), file, indent=4)
+        
 
-    except requests.exceptions.RequestException as e:
-        print("Something went wrong:", e)
+        latitude_list = []
+        longitude_list = []
+        batch_number += 1
 
-# print(responde)
+    
+
