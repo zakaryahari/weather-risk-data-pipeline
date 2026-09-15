@@ -5,20 +5,18 @@ import os
 import glob
 
 
-
-file_paths = glob.glob("data/bronze/citys/*.json")
+All_Cites_Name = pd.read_csv("data/maroc_cities.csv")
+with open("data/bronze/All_Cities_Bronze.json") as file :
+    All_Cites_Data = json.load(file)
 
 df = pd.DataFrame()
 # print(df)   
 
-for path in file_paths:
+for index,obj in enumerate(All_Cites_Data):
 
-    file_name = os.path.basename(path) 
+    # print(All_Cites_Name.iloc[index]['city'])
 
-    with open(path) as file :
-        obj = json.load(file)
-
-    city_name = file_name.replace(".json", "") 
+    city_name = All_Cites_Name.iloc[index]['city']
 
     tab = pd.DataFrame(obj['daily'])
     tab['city'] = city_name
