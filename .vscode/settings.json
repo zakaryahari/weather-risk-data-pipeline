@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Weather_DB",
+            "database": "logistics_weather",
+            "username": "admin",
+            "password": "admin",
+            "group": "Weather_DB"
+        }
+    ]
+}
