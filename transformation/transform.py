@@ -72,7 +72,7 @@ df['temp_points'] = np.select(temp_conditions, temp_point_choices, default=0)
 
 
 df['risk_score'] = df['wind_points'] + df['precip_points'] + df['temp_points']
-df = df.drop(columns=['wind_points', 'precip_points', 'temp_points'])
+df = df.drop(columns=['wind_points', 'precip_points', 'temp_points',"temperature_2m_min", "precipitation_probability_max", "wind_gusts_10m_max", "weather_code"])
 
 
 df.to_csv("data/gold/All_Moroccain_Citys.csv" , index=False)
