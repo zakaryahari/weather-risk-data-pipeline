@@ -41,12 +41,47 @@ with engine.begin() as connection:
             "longitude": row['longitude']}
         )
 
+print("Cities data inserted/updated successfully!")
+
 db_cities = pd.read_sql("SELECT city_id, city FROM cities", con=engine)
 
 merged_df = pd.merge(db_cities , df_gold , on="city")
 
 final_df = merged_df.drop(columns=[ "city" , "latitude" , "longitude"])
 
+
+with engine.begin() as connection:
+    for index, row in final_df.iterrows(): 
+
+        query = "INSERT INTO forecasts (city_id, time, temperature_2m_max, precipitation_sum, wind_speed_10m_max, temp_category, precip_category, wind_category, risk_score, extracted_at) " \
+                "VALUES (:city_id, :time, :temperature_2m_max, :precipitation_sum, :wind_speed_10m_max, :temp_category, :precip_category, :wind_category, :risk_score, :extracted_at) " \
+                "ON CONFLICT (city_id, time) DO UPDATE SET " \
+                "temperature_2m_max = EXCLUDED.temperature_2m_max, " \
+                "precipitation_sum = EXCLUDED.precipitation_sum, " \
+                "wind_speed_10m_max = EXCLUDED.wind_speed_10m_max, " \
+                "temp_category = EXCLUDED.temp_category, " \
+                "precip_category = EXCLUDED.precip_category, " \
+                "wind_category = EXCLUDED.wind_category, " \
+                "risk_score = EXCLUDED.risk_score, " \
+                "extracted_at = EXCLUDED.extracted_at;"
+
+        connection.execute(
+            text(query), 
+            {
+                "city_id": row['city_id'],
+                "time": row['time'],
+                "temperature_2m_max": row['temperature_2m_max'],
+                "precipitation_sum": row['precipitation_sum'],
+                "wind_speed_10m_max": row['wind_speed_10m_max'],
+                "temp_category": row['temp_category'],
+                "precip_category": row['precip_category'],
+                "wind_category": row['wind_category'],
+                "risk_score": row['risk_score'],
+                "extracted_at": row['extracted_at']
+            }
+        )
+
+print("Forecasts data inserted/updated successfully!")
 # print(final_df) 
 
 
