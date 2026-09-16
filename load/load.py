@@ -47,6 +47,8 @@ merged_df = pd.merge(db_cities , df_gold , on="city")
 
 final_df = merged_df.drop(columns=[ "city" , "latitude" , "longitude"])
 
-print(final_df) 
+# print(final_df) 
+
+
 
 

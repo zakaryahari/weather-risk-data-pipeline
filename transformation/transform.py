@@ -58,7 +58,7 @@ temp_conditions = [
     (df['temperature_2m_max'] < 5)
 ]
 temp_cat_choices = ["Normal", "Extreme Heat", "Extreme Cold"]
-temp_point_choices = [0, 15, 15]
+temp_point_choices = [0, 7, 15]
 
 
 df['wind_category'] = np.select(wind_conditions, wind_cat_choices, default="Unknown")
