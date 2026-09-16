@@ -41,3 +41,12 @@ with engine.begin() as connection:
             "longitude": row['longitude']}
         )
 
+db_cities = pd.read_sql("SELECT city_id, city FROM cities", con=engine)
+
+merged_df = pd.merge(db_cities , df_gold , on="city")
+
+# final_df = merged_df.drop(columns=[ "city" , "latitude_x" , "longitude_x"  , "latitude_y" , "longitude_y"])
+
+print(merged_df)
+
+
