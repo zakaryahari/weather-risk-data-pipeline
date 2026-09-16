@@ -24,3 +24,20 @@ with engine.begin() as connection:
     connection.execute(text(schema_query))
     print("Database schema verified and ready!")
 
+
+with engine.begin() as connection:
+    for index, row in df_cities.iterrows(): 
+        query = "INSERT INTO cities (city,latitude,longitude)" \
+        "VALUES (:city, :latitude, :longitude) " \
+        "ON CONFLICT (city) DO UPDATE SET " \
+        "city = EXCLUDED.city," \
+        "latitude = EXCLUDED.latitude," \
+        "longitude = EXCLUDED.longitude;"
+
+        connection.execute(
+            text(query), 
+            {"city": row['city'],
+            "latitude": row['latitude'], 
+            "longitude": row['longitude']}
+        )
+
