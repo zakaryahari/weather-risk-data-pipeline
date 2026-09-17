@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   postgres_db:
     image: postgres:15
     container_name: weather_db
@@ -13,6 +14,22 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
+
+  airflow_standalone:
+    image: apache/airflow:2.7.2
+    container_name: airflow_single_node
+    command: standalone 
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
+      - ./data:/opt/airflow/data
+    depends_on:
+      - postgres_db
 
 volumes:
   pgdata:
