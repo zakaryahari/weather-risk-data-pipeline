@@ -32,3 +32,21 @@ available_risks.sort()
 available_date = df['time'].unique()
 
 filterd_data = df.copy()
+
+
+selected_cities = st.sidebar.multiselect(
+    "Choose City Plz :"
+    ,available_cities
+)
+
+
+selected_risk = st.sidebar.multiselect(
+    "Choose Risk Score :"
+    ,available_risks
+)
+
+
+selected_date = st.sidebar.multiselect(
+    "Choose datetime Plz :"
+    ,available_date
+)
