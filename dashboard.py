@@ -100,3 +100,26 @@ fig3 = px.line(
 )
 
 st.plotly_chart(fig3, use_container_width=True)
+
+fig4 = px.scatter_map(
+    filterd_data,
+        lat="latitude",
+        lon="longitude",
+        color="risk_score",
+        size="risk_score",    
+        hover_name="city",  
+        hover_data={
+            "latitude": False,  
+            "longitude": False,
+            "risk_score": True,
+            "temperature_2m_max": True,
+            "wind_speed_10m_max": True,
+            "precipitation_sum": True
+        },
+        zoom=5,
+        center={"lat": 31.7917, "lon": -7.0926},
+        map_style="carto-darkmatter",
+        height=900
+)
+
+st.plotly_chart(fig4 , use_container_width=True)
