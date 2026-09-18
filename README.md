@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/docker-library/docs/master/postgres/logo.png" width="100" alt="PostgreSQL Logo">
   <img src="https://airflow.apache.org/images/feature-image.png" width="150" alt="Airflow Logo">
-  <img src="https://raw.githubusercontent.com/streamlit/streamlit/develop/docs/static/img/streamlit-logo.png" width="150" alt="Streamlit Logo">
+  <img src="https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.png" width="150" alt="Streamlit Logo">
 </div>
 
 <div align="center">
