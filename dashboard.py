@@ -89,3 +89,14 @@ with col2 :
 )
 
 col2.plotly_chart(fig2, use_container_width=True)
+
+st.divider() 
+st.subheader("Wind Speed Forecast")[cite: 1, 2]
+
+fig3 = px.line(
+    filterd_data,
+    x="city",
+    y="wind_speed_10m_max"
+)
+
+st.plotly_chart(fig3, use_container_width=True)
