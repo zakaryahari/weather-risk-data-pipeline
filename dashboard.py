@@ -76,3 +76,16 @@ with col1 :
         color="city"
 )
 col1.plotly_chart(fig, use_container_width=True)
+
+with col2 :
+    st.subheader("Temperature Forecast")
+
+    fig2 = px.line(
+        filterd_data,
+        x="city",
+        y="temperature_2m_max",
+        color="city",
+        markers=True
+)
+
+col2.plotly_chart(fig2, use_container_width=True)
