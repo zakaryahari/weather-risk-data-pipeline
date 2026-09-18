@@ -24,3 +24,11 @@ st.logo(image="data/youcode.png",
 
 df = load_data()
 
+
+
+available_cities = df['city'].unique()
+available_risks = df['risk_score'].unique()
+available_risks.sort()
+available_date = df['time'].unique()
+
+filterd_data = df.copy()
