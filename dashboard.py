@@ -50,3 +50,15 @@ selected_date = st.sidebar.multiselect(
     "Choose datetime Plz :"
     ,available_date
 )
+
+if selected_cities :
+    filterd_data = filterd_data[filterd_data['city'].isin(selected_cities)]
+
+if selected_risk :
+    filterd_data = filterd_data[filterd_data['risk_score'].isin(selected_risk)]
+
+if selected_date :
+    filterd_data = filterd_data[filterd_data['time'].isin(selected_date)]
+
+
+st.dataframe(filterd_data)
