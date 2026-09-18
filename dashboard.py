@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import timedelta, datetime
+import plotly.express as px
 
 
 st.set_page_config(page_title="Weather Risk Dashboard", layout="wide")
@@ -8,11 +9,10 @@ st.set_page_config(page_title="Weather Risk Dashboard", layout="wide")
 
 @st.cache_data
 def load_data():
-    data = pd.read_csv("data/gold/All_Moroccain_Citys.csv")
-    data['time'] = pd.to_datetime(data['time'])
-    return data 
+    DB_URL = "postgresql://admin:admin@postgres_db:5432/logistics_weather"
+    data_cites = pd.read_sql("SELECT * FROM cities", con=DB_URL)
+    data_forecase = pd.read_sql("SELECT * FROM forecasts", con=DB_URL)
 
-print("Loading data...")
-data = load_data()
+    data = data_cites.merge(data_forecase ,on="city_id")
 
-
+    return data
