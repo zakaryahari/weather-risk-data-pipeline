@@ -62,3 +62,17 @@ if selected_date :
 
 
 st.dataframe(filterd_data)
+
+
+col1, col2 = st.columns(2)
+
+with col1 :
+    st.subheader("Precipitation Trends by City")
+
+    fig = px.bar(
+        filterd_data,
+        x="city",
+        y="precipitation_sum",
+        color="city"
+)
+col1.plotly_chart(fig, use_container_width=True)
