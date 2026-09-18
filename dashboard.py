@@ -16,3 +16,11 @@ def load_data():
     data = data_cites.merge(data_forecase ,on="city_id")
 
     return data
+
+st.title("Weather Logistics Risk Dashboard")
+
+st.logo(image="data/youcode.png",
+            icon_image="data/youcode.png")
+
+df = load_data()
+
