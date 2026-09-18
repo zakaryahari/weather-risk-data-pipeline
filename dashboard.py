@@ -34,6 +34,25 @@ available_date = df['time'].unique()
 filterd_data = df.copy()
 
 
+st.subheader("Overview Statistics")
+
+
+kpi1, kpi2, kpi3, kpi4 = st.columns(4)
+
+
+total_cities = len(filterd_data['city'].unique())
+max_risk = filterd_data['risk_score'].max()
+max_temp = filterd_data['temperature_2m_max'].max()
+max_wind = filterd_data['wind_speed_10m_max'].max()
+
+
+kpi1.metric(label="Cities Tracked", value=total_cities)
+kpi2.metric(label="Highest Risk Score", value=f"{max_risk}")
+kpi3.metric(label="Max Temp (°C)", value=f"{max_temp}")
+kpi4.metric(label="Peak Wind Gusts", value=f"{max_wind}")
+
+st.divider()
+
 selected_cities = st.sidebar.multiselect(
     "Choose City Plz :"
     ,available_cities
@@ -65,6 +84,7 @@ st.dataframe(filterd_data)
 
 
 col1, col2 = st.columns(2)
+st.divider() 
 
 with col1 :
     st.subheader("Precipitation Trends by City")
@@ -90,8 +110,8 @@ with col2 :
 
 col2.plotly_chart(fig2, use_container_width=True)
 
-st.divider() 
-st.subheader("Wind Speed Forecast")[cite: 1, 2]
+
+st.subheader("Wind Speed Forecast")
 
 fig3 = px.line(
     filterd_data,
